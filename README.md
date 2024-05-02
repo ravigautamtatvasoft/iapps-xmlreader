@@ -16,7 +16,7 @@ mvn clean package -DskipLiquibase=true -DskipTests=true
 cd iapps-xmlreader
 ```
 ```sh
-docker-compose up
+ docker-compose -f docker-compose.yaml up -d --build
 ```
 - Now build the project with
 ```sh
