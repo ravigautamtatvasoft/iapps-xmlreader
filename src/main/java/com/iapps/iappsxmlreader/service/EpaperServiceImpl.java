@@ -27,6 +27,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Epaper service implementation class.
+ *
+ * @author Ravi.Gautam
+ * @see EpaperRepository
+ * @see XmlUtils
+ * @since 02-May-2024
+ * @version 1.0
+ *
+ */
+
 @Service
 public class EpaperServiceImpl implements EpaperService{
     private Logger LOGGER = LoggerFactory.getLogger(EpaperServiceImpl.class);

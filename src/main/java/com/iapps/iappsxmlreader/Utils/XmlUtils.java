@@ -20,11 +20,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * XML Utils class for validating and parsing XML.
+ *
+ * @author Ravi.Gautam
+ * @since 02-May-2024
+ * @version 1.0
+ *
+ */
+
 @Component
 public class XmlUtils {
 
     private Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
+    // It checks if XML is valid or not
     public boolean validateXml(MultipartFile xml) throws SAXException {
         if (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml")) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -44,6 +54,7 @@ public class XmlUtils {
         return true;
     }
 
+    // It parses the XML to EpaperRequestDTO
     public EpaperRequestDTO parseXMLDocument(InputStream xmlInputStream) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(EpaperRequestDTO.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
