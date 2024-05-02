@@ -11,6 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
+/**
+ * EpaperController
+ *
+ * @author Ravi.Gautam
+ * @see EpaperService
+ * @since 02-May-2024
+ * @version 1.0
+ *
+ */
+
 @RestController
 @RequestMapping("/api")
 public class EpaperController {

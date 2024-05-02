@@ -10,6 +10,16 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * EpaperRepository.
+ *
+ * @author Ravi.Gautam
+ * @see Epaper
+ * @since 02-May-2024
+ * @version 1.0
+ *
+ */
+
 @Repository
 public interface EpaperRepository extends JpaRepository<Epaper, Long> {
 
