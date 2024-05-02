@@ -34,7 +34,11 @@ public class XmlUtils {
 
     private Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
-    // It checks if XML is valid or not
+    /** This util method validate the XML
+     * @param xml
+     * @return boolean
+     * @throws SAXException
+     */
     public boolean validateXml(MultipartFile xml) throws SAXException {
         if (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml")) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -54,7 +58,11 @@ public class XmlUtils {
         return true;
     }
 
-    // It parses the XML to EpaperRequestDTO
+    /** This util method parse the data to EpaperRequestDTO
+     * @param xmlInputStream
+     * @return boolean
+     * @throws JAXBException
+     */
     public EpaperRequestDTO parseXMLDocument(InputStream xmlInputStream) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(EpaperRequestDTO.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -63,6 +71,10 @@ public class XmlUtils {
         return epaperRequestDto;
     }
 
+    /** This util method get the file as InputStream.
+     * @param fileName
+     * @return InputStream
+     */
     private InputStream getFileAsStream(String fileName) {
         ClassLoader classLoader = XmlUtils.class.getClassLoader();
         return classLoader.getResourceAsStream(fileName);

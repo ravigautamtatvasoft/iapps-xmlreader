@@ -9,7 +9,7 @@
 
 - Build the project
 ```sh
-mvn clean package -DskipLiquibase=true -DskipTests=true
+mvn clean install
 ```
 - Build docker container
 ```sh
@@ -17,10 +17,6 @@ cd iapps-xmlreader
 ```
 ```sh
  docker-compose -f docker-compose.yaml up -d --build
-```
-- Now build the project with
-```sh
-mvn clean package
 ```
 ## API Endpoints
 - POST API: http://localhost:8080/api/uploadXml
@@ -34,5 +30,5 @@ mvn clean package
         - order: true for Ascending | false for Descending order.
         - pageNo: starts from 0
         - pageSize: no of record need to get in result. 
-        - fromDate: It's start date can be in format YYYY-MM-DD
-        - toDate: It's end date can be in format YYYY-MM-DD
+        - fromDate: It's start date can be in long milliseconds format
+        - toDate: It's end date can be in long milliseconds format

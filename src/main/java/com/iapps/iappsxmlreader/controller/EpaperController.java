@@ -31,7 +31,7 @@ public class EpaperController {
     /** API used to upload and save the XML data.
      * @param request
      * @param paperXml
-     * @return List<EpaperRequestDTO>
+     * @return ResponseEntity
      * @throws IOException
      * @throws SAXException
      * @throws JAXBException
@@ -51,7 +51,7 @@ public class EpaperController {
      * @param sortBy
      * @param order
      * @param search
-     * @return List<EpaperDTO>
+     * @return ResponseEntity
      * @throws Exception
      */
     @GetMapping("/getEpapers")

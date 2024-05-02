@@ -48,6 +48,19 @@ public class EpaperServiceImpl implements EpaperService{
     @Autowired
     private XmlUtils xmlUtils;
 
+
+    /** This Service method is used to get the data by applying filters
+     * @param request
+     * @param fromDate
+     * @param toDate
+     * @param pageNumber
+     * @param pageSize
+     * @param sortBy
+     * @param order
+     * @param search
+     * @return ResponseEntity
+     * @throws Exception
+     */
     @Override
     public ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, Long fromDate, Long toDate, Integer pageNumber, Integer pageSize) throws Exception {
 
@@ -56,14 +69,23 @@ public class EpaperServiceImpl implements EpaperService{
                 pageSize == null ? (Integer.MAX_VALUE - 1) : pageSize == Integer.MAX_VALUE ? (pageSize - 1) : pageSize,
                 Sort.by(order == null || order ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy == null ? "id" : sortBy));
 
-
         Date dateFrom = fromDate == null ? new Date(0) : new Date(fromDate);
         Date dateTo = toDate == null ? new Date() : new Date(toDate);
+
+        LOGGER.info("fromDate timestamp:"+dateFrom+" toDate timestamp:"+toDate);
 
         List<Epaper> epapers = epaperRepository.getAllEpaperList(search, dateFrom, dateTo, page);
         return ResponseEntity.ok(epapers.stream().map(this::toDTO).collect(Collectors.toList()));
     }
 
+    /** This service method  is used to validate the xml and process to save the XML data.
+     * @param request
+     * @param xmlFile
+     * @return ResponseEntity
+     * @throws IOException
+     * @throws SAXException
+     * @throws JAXBException
+     */
     @Override
     public ResponseEntity<?> uploadXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException {
         LOGGER.info("Upload XML Start");
@@ -77,12 +99,21 @@ public class EpaperServiceImpl implements EpaperService{
         return ResponseEntity.badRequest().body("Invalid File");
     }
 
+    /** It converts the epaper to epaperDTO
+     * @param epaper
+     * @return EpaperDTO
+     */
     private EpaperDTO toDTO(Epaper epaper) {
         EpaperDTO epaperDto = new EpaperDTO();
         BeanUtils.copyProperties(epaper, epaperDto);
         return epaperDto;
     }
 
+    /** It converts the EpaperRequestDTO to Epaper
+     * @param filename
+     * @param epaperRequestDTO
+     * @return Epaper
+     */
     private Epaper toEntity(String filename, EpaperRequestDTO epaperRequestDTO) {
         Epaper epaper = Epaper.builder().id(null).filename(filename)
                 .newspaperName(epaperRequestDTO.getDeviceInfo().getAppInfo().getNewspaperName())

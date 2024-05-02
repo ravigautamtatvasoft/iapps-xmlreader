@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: changelog/sql/202405011720.sql
