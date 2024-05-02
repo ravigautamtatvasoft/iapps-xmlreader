@@ -28,7 +28,8 @@ public class XmlUtils {
     public boolean validateXml(MultipartFile xml) throws SAXException {
         if (xml.getContentType().contains("text/xml") || xml.getContentType().contains("application/xml")) {
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Source schemaFile = new StreamSource(getFile("epaper-schema.xsd"));
+
+            Source schemaFile = new StreamSource(getFileAsStream("epaper-schema.xsd"));
             Schema schema = factory.newSchema(schemaFile);
             Validator validator = schema.newValidator();
             try {
@@ -51,7 +52,8 @@ public class XmlUtils {
         return epaperRequestDto;
     }
 
-    private File getFile(String fileName) {
-        return new File(getClass().getClassLoader().getResource(fileName).getFile());
+    private InputStream getFileAsStream(String fileName) {
+        ClassLoader classLoader = XmlUtils.class.getClassLoader();
+        return classLoader.getResourceAsStream(fileName);
     }
 }
