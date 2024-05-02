@@ -49,7 +49,7 @@ public class EpaperServiceImpl implements EpaperService{
     private XmlUtils xmlUtils;
 
     @Override
-    public ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, String fromDate, String toDate, Integer pageNumber, Integer pageSize) throws Exception {
+    public ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, Long fromDate, Long toDate, Integer pageNumber, Integer pageSize) throws Exception {
 
         LOGGER.info("In getAllEpaperList");
         Pageable page = PageRequest.of(pageNumber == null ? 0 : pageNumber,
@@ -57,8 +57,8 @@ public class EpaperServiceImpl implements EpaperService{
                 Sort.by(order == null || order ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy == null ? "id" : sortBy));
 
 
-        Date dateFrom = parseDate(fromDate);
-        Date dateTo = parseDate(toDate);
+        Date dateFrom = fromDate == null ? new Date(0) : new Date(fromDate);
+        Date dateTo = toDate == null ? new Date() : new Date(toDate);
 
         List<Epaper> epapers = epaperRepository.getAllEpaperList(search, dateFrom, dateTo, page);
         return ResponseEntity.ok(epapers.stream().map(this::toDTO).collect(Collectors.toList()));
@@ -90,20 +90,5 @@ public class EpaperServiceImpl implements EpaperService{
                 .width(epaperRequestDTO.getDeviceInfo().getScreenInfo().getWidth())
                 .dpi(epaperRequestDTO.getDeviceInfo().getScreenInfo().getDpi()).uploadedAt(new Date()).build();
         return epaper;
-    }
-
-    private Date parseDate(String sdate){
-        if(StringUtils.isNotBlank(sdate)) {
-            String pattern = "yyyy-MM-dd";
-            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-            try {
-                Date date = dateFormat.parse(sdate);
-                LOGGER.info("Converted Date: " + date);
-                return date;
-            } catch (ParseException e) {
-                LOGGER.error("Error while parsing date", e);
-            }
-        }
-        return new Date();
     }
 }

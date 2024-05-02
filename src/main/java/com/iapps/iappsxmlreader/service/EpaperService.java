@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public interface EpaperService {
 
-    ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, String fromDate, String toDate, Integer pageNumber, Integer pageSize) throws Exception;
+    ResponseEntity<?> getAllEpaperList(HttpServletRequest request, String search, String sortBy, Boolean order, Long fromDate, Long toDate, Integer pageNumber, Integer pageSize) throws Exception;
 
     ResponseEntity<?> uploadXml(HttpServletRequest request, MultipartFile xmlFile) throws IOException, SAXException, JAXBException;
 }
